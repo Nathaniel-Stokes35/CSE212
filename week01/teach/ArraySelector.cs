@@ -11,6 +11,28 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)
     {
-        return [];
+        int[] results = new int[list1.Length + list2.Length];
+        int l1curr = 0;
+        int l2curr = 0;
+        int count = 0;
+        foreach (int item in select)
+        {
+            if (item == 1)
+            {
+                results[count] = list1[l1curr];
+                l1curr++;
+            }
+            else if (item == 2)
+            {
+                results[count] = list2[l2curr];
+                l2curr++;
+            }
+            else
+            {
+                throw new ArgumentException("Select array can only contain 1 or 2");
+            }
+            count++;
+        }
+        return results;
     }
 }

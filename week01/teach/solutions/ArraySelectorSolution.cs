@@ -24,10 +24,11 @@ public static class ArraySelectorSolution
         {
             if (select[i] == 1)
                 result[i] = list1[l1Idx++];
-            else
+            else if (select[i] == 2)
                 result[i] = list2[l2Idx++];
+            else
+                throw new ArgumentException("Select array can only contain 1 or 2");
         }
-
         return result;
     }
 

@@ -41,7 +41,7 @@ public static class Algorithms {
             count += 1;
 
         return count;
-    }
+    } /// Big O: O(n)
 
     /// <summary>
     /// The count variable is keeping track of the amount
@@ -56,7 +56,7 @@ public static class Algorithms {
             count += 1;
 
         return count;
-    }
+    } /// Big O: O(n^2)
 
     /// <summary>
     /// The count variable is keeping track of the amount
@@ -75,5 +75,5 @@ public static class Algorithms {
         }
 
         return count;
-    }
+    } /// Big O: O(log n)
 }
