@@ -8,7 +8,7 @@
         Console.WriteLine("Test 1");
         var queue = new SimpleQueue();
         queue.Enqueue(100);
-        var value = queue.Dequeue();
+        var value = queue.Dequeue(); // Should be 100
         Console.WriteLine(value);
         // Defect(s) Found:
 
@@ -22,11 +22,11 @@
         queue.Enqueue(200);
         queue.Enqueue(300);
         queue.Enqueue(400);
-        value = queue.Dequeue();
+        value = queue.Dequeue(); // Should be 200
         Console.WriteLine(value);
-        value = queue.Dequeue();
+        value = queue.Dequeue(); // Should be 300
         Console.WriteLine(value);
-        value = queue.Dequeue();
+        value = queue.Dequeue(); // Should be 400
         Console.WriteLine(value);
         // Defect(s) Found: 
 
@@ -54,7 +54,7 @@
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
     private void Enqueue(int value) {
-        _queue.Insert(0, value);
+        _queue.Add(value);
     }
 
     /// <summary>
@@ -66,8 +66,8 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        var value = _queue[0];
+        _queue.RemoveAt(0);
         return value;
     }
 }
