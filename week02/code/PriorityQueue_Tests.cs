@@ -9,7 +9,8 @@ public class PriorityQueueTests
     // Scenario: Adding a value of 100 with a priority of 5, 42 with a priority of 1, 3 with a priority of 10, and a value of 50 with a priority of 1.
     // Expected Result: 3, 100, 42, 50
     // Defect(s) Found: 
-    public void TestPriorityQueue_1()
+    public void TestPriorityQueue_1() // This test was originally meant to validate different variable types being set as "Value"
+    //  but since I was told not to mess with the modified "ToString" method I figured leaving it as a string was the best option.
     {
         var priorityQueue = new PriorityQueue();
         priorityQueue.Enqueue("100", 5);
