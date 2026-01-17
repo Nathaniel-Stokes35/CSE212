@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using System.Reflection;
+
+/// <summary>
 /// Maintain a Customer Service Queue.  Allows new customers to be 
 /// added and allows customers to be serviced.
 /// </summary>
@@ -11,12 +13,23 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
+        // Scenario: User inputs negetaive or zero max size, checking for default size of 10
         // Expected Result: 
         Console.WriteLine("Test 1");
 
         // Defect(s) Found: 
-
+        var cs = new CustomerService(-5);
+        bool defect = false;
+        if (cs._maxSize != 10)
+            Console.WriteLine("Defect Found: Max Size not set to 10 for negative input");
+            defect = true;
+        cs = new CustomerService(0);
+        if (cs._maxSize != 10)
+            Console.WriteLine("Defect Found: Max Size not set to 10 for zero input");
+            defect = true;
+        if (!defect)
+            Console.WriteLine("No Defects Found");
+            
         Console.WriteLine("=================");
 
         // Test 2
@@ -25,6 +38,14 @@ public class CustomerService {
         Console.WriteLine("Test 2");
 
         // Defect(s) Found: 
+        var cs2 = new CustomerService(2);
+        cs2.AddNewCustomer();
+        cs2.AddNewCustomer();
+        cs2.AddNewCustomer(); // This should show an error message about max size
+        cs2.ServeCustomer();
+        cs2.ServeCustomer();
+        cs2.ServeCustomer(); // This should show an error message about no customers
+
 
         Console.WriteLine("=================");
 
@@ -67,7 +88,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -82,15 +103,29 @@ public class CustomerService {
         // Create the customer object and add it to the queue
         var customer = new Customer(name, accountId, problem);
         _queue.Add(customer);
+        Console.WriteLine("Customer added to queue.");
+        for (int i = 0; i < _queue.Count; i++)
+        {
+            Console.WriteLine(_queue[i].ToString());
+        }
     }
 
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        if (_queue.Count == 0) {
+            Console.WriteLine("No Customers in Queue.");
+            return;
+        }
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
+        Console.WriteLine("Customer Served.");
+        for (int i = 0; i < _queue.Count; i++)
+        {
+            Console.WriteLine(_queue[i].ToString());
+        }
     }
 
     /// <summary>
