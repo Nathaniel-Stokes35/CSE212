@@ -32,7 +32,18 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void InsertTail(int value)
     {
-        // TODO Problem 1
+        Node newNode = new(value);
+        if (_tail is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        } 
+        else
+        {
+            newNode.Prev = _tail;
+            _tail.Next = newNode;
+            _tail = newNode;    
+        }
     }
 
 
@@ -64,7 +75,16 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void RemoveTail()
     {
-        // TODO Problem 2
+        if (_tail == _head)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null;
+            _tail = _tail.Prev;
+        }
     }
 
     /// <summary>
@@ -108,7 +128,30 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {
-        // TODO Problem 3
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == value)
+            {
+                if (curr == _tail)
+                {
+                    RemoveTail();
+                }
+                else if (curr == _head)
+                {
+                    RemoveHead();
+                }
+                else
+                {
+                    curr.Prev.Next = curr.Next;
+                    curr.Next.Prev = curr.Prev;
+                    curr.Next = null;
+                    curr.Prev = null;
+                }
+                return;
+            }
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
@@ -116,7 +159,55 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Replace(int oldValue, int newValue)
     {
-        // TODO Problem 4
+        Node? curr = _head;
+
+        while (curr is not null)
+        {
+            Node? next = curr.Next;
+            if (curr.Data == oldValue)
+            {
+                // When the Value is found it constructs the new Node with the Next and Previous of the node being replaced
+                Node newNode = new(newValue)
+                {
+                    Prev = curr.Prev,
+                    Next = curr.Next
+                };
+
+                // If the value was the head it simply sets the _head to the new Node and if not it sets the node before it's Next to the new node.
+                if (curr == _head)
+                {
+                    _head = newNode;
+                } 
+                else
+                {
+                    curr.Prev!.Next = newNode;
+                }
+
+                // If the value is the tail than it does pretty much the same thing with head but only backwards, setting the Prev of the node in front to the new node.
+                if (curr == _tail)
+                {
+                    _tail = newNode;
+                }
+                else
+                {
+                    curr.Next!.Prev = newNode;
+                }
+
+                // Removes the old Node by setting the value of Next and Prev to Null
+                curr.Next = null;
+                curr.Prev = null;
+            }
+            curr = next;
+        }
+        /* *************************************** Alternative Solution **************************************** * 
+        * Node? curr = _head;
+        * while (curr is not null) 
+        * {
+        *     if(curr.Data == oldValue) { curr.Data = newValue; }
+        *     curr = curr.Next; 
+        * }
+        *
+        * ***************************************************************************************************** */
     }
 
     /// <summary>
@@ -146,8 +237,12 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public IEnumerable Reverse()
     {
-        // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail;
+        while (curr is not null)
+        {
+            yield return curr.Data;
+            curr = curr.Prev;
+        }
     }
 
     public override string ToString()
