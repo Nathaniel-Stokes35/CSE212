@@ -1,3 +1,5 @@
+using System.Drawing;
+
 public static class Trees
 {
     /// <summary>
@@ -48,6 +50,16 @@ public static class Trees
     /// <param name="bst">the BinarySearchTree in which to insert the values</param>
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
-        // TODO Start Problem 5
+        // Base Case
+        if (first > last) // If we've sorted through all of the numbers, end.
+        {
+            return;
+        }
+
+        int middle = (first + last) / 2;
+        bst.Insert(sortedNumbers[middle]);
+
+        InsertMiddle(sortedNumbers, first, middle - 1, bst); // Recursing the left side of the tree
+        InsertMiddle(sortedNumbers, middle + 1, last, bst); // Recursing the right side of the tree
     }
 }

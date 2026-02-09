@@ -11,7 +11,11 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        if(Contains(value))
+        {
+            Console.WriteLine(value + " is already in Binary Tree. Duplicates not allowed.");
+            return; 
+        }
 
         if (value < Data)
         {
@@ -33,13 +37,25 @@ public class Node
 
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        if (Data == value)
+        {
+            return true;
+        }
+        if (value < Data)
+        {
+            return Left is not null && Left.Contains(value);
+        }
+        else
+        {
+            return Right is not null && Right.Contains(value);
+        }
     }
 
-    public int GetHeight()
+    public int GetHeight() // calculating each subtree's side individually then returning the largest of the _root node
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        int leftHeight = Left?.GetHeight() ?? 0; // declear the left heights variable which will be returned with 1 addition (first call will be 1, second call will have the 1 return and it will add 1 so 2, then so forth and so on until there is not left)
+        int rightHeight = Right?.GetHeight() ?? 0; // does the same thing as the left side except moving to the right now
+
+        return 1 + Math.Max(leftHeight, rightHeight); // returning 1 + whatever the maximum size is, right or left.
     }
 }
